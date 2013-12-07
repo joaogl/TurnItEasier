@@ -2,13 +2,12 @@ package joaolourenco.net.pascal;
 
 import java.awt.Color;
 import java.io.Console;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
 
 import joaolourenco.net.pascal.display.Display;
 import joaolourenco.net.pascal.display.DynamicConsole;
 import joaolourenco.net.pascal.exceptions.console.ImpossibleActionException;
+import joaolourenco.net.pascal.exceptions.console.NullPointException;
 
 public class PascalLike {
 
@@ -23,13 +22,11 @@ public class PascalLike {
 		} else if (Display.isDisplayType(DisplayType.Window)) {
 			ThrowImpossibleW("readKey");
 			return null;
-		} else
-			return DynamicConsole.readKey();
+		} else return DynamicConsole.readKey();
 	}
 
 	public static String read() {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole))
-			return DynamicConsole.read();
+		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
 			Scanner scanIn = new Scanner(System.in);
@@ -39,96 +36,73 @@ public class PascalLike {
 		}
 	}
 
+	public static void delay(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static String readPW() {
 		Console c = System.console();
-		if (c != null)
-			return String.valueOf(System.console().readPassword());
+		if (c != null) return String.valueOf(System.console().readPassword());
 		else {
-			String out = null;
 			try {
-				InputStream in = System.in;
-				byte[] b = new byte[50];
-				int l = in.read(b);
-				l--;
-				if (l > 0) {
-					byte[] e = new byte[l];
-					System.arraycopy(b, 0, e, 0, l);
-					out = new String(e);
-				} else
-					out = "No password to read.";
-			} catch (IOException e1) {
-				e1.printStackTrace();
+				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
+			} catch (ImpossibleActionException e) {
+				e.printStackTrace();
 			}
-			return out;
+			return null;
 		}
 	}
 
 	public static void writeln(String args) {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole))
-			DynamicConsole.writeln(args);
-		else
-			System.out.println(args);
+		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		else System.out.println(args);
 	}
 
 	public static void write(String args) {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole))
-			DynamicConsole.write(args);
-		else
-			System.out.print(args);
+		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		else System.out.print(args);
 	}
 
 	public static void TextBackground(int color) {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("TextBackground");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("TextBackground");
-		else
-			DynamicConsole.TextBackground(color);
+		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextBackground");
+		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextBackground");
+		else DynamicConsole.TextBackground(color);
 	}
 
 	public static void TextBackground(Color color) {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("TextBackground");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("TextBackground");
-		else
-			DynamicConsole.TextBackground(color);
+		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextBackground");
+		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextBackground");
+		else DynamicConsole.TextBackground(color);
 	}
 
 	public static void TextColor(int color) {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("TextColor");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("TextColor");
-		else
-			DynamicConsole.TextColor(color);
+		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextColor");
+		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextColor");
+		else DynamicConsole.TextColor(color);
 	}
 
 	public static void TextColor(Color color) {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("TextColor");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("TextColor");
-		else
-			DynamicConsole.TextColor(color);
+		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextColor");
+		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextColor");
+		else DynamicConsole.TextColor(color);
 	}
 
 	public static void GotoXY(int x, int y) {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("GotoXY");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("GotoXY");
-		else
-			DynamicConsole.GotoXY();
+		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("GotoXY");
+		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("GotoXY");
+		else DynamicConsole.GotoXY();
 	}
 
 	public static void clrscr() {
-		if (Display.isDisplayType(DisplayType.Console))
-			ThrowImpossibleC("clrscr");
-		else if (Display.isDisplayType(DisplayType.Window))
-			ThrowImpossibleW("clrscr");
-		else
-			DynamicConsole.slrscr();
+		if (Display.isDisplayType(DisplayType.Console)) {
+			for (int i = 0; i < 200; i++)
+				System.out.println("");
+		} else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("clrscr");
+		else DynamicConsole.slrscr();
 	}
 
 	public static void ThrowImpossibleC(String message) {
@@ -141,8 +115,7 @@ public class PascalLike {
 
 	public static void ThrowImpossibleW(String message) {
 		try {
-			throw new joaolourenco.net.pascal.exceptions.window.ImpossibleActionException(
-					message);
+			throw new joaolourenco.net.pascal.exceptions.window.ImpossibleActionException(message);
 		} catch (ImpossibleActionException e) {
 			e.printStackTrace();
 		}

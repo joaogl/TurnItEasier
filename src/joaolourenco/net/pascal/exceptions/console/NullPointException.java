@@ -11,4 +11,8 @@ public class NullPointException extends NullPointerException {
 		super("The default console doesnt have " + args + "");
 	}
 
+	public NullPointException(String args, String argsw) {
+		super(args);
+	}
+
 }
