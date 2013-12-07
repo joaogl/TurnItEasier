@@ -16,12 +16,9 @@ public class Display {
 	private static JFrame frame;
 
 	public static void create(DisplayType a) {
-		if (a == DisplayType.Console)
-			Console.create();
-		else if (a == DisplayType.DynamicConsole)
-			DynamicConsole.create();
-		else if (a == DisplayType.Window)
-			Window.create();
+		if (a == DisplayType.Console) {
+		} else if (a == DisplayType.DynamicConsole) DynamicConsole.create();
+		else if (a == DisplayType.Window) Window.create();
 		else {
 			try {
 				throw new InvalidDisplayTypeException(a.toString());
@@ -29,11 +26,8 @@ public class Display {
 				e.printStackTrace();
 			}
 		}
-		if (a == DisplayType.Console || a == DisplayType.DynamicConsole
-				|| a == DisplayType.Window)
-			setDisplayType(a);
-		else
-			setDisplayType(DisplayType.DynamicConsole);
+		if (a == DisplayType.Console || a == DisplayType.DynamicConsole || a == DisplayType.Window) setDisplayType(a);
+		else setDisplayType(DisplayType.DynamicConsole);
 	}
 
 	public static void setDisplayType(DisplayType args) {
@@ -52,21 +46,18 @@ public class Display {
 		if (isDisplayType(DisplayType.Console)) {
 			ThrowNull("width");
 			return 0;
-		} else
-			return width;
+		} else return width;
 	}
 
 	public static int getHeight() {
 		if (isDisplayType(DisplayType.Console)) {
 			ThrowNull("height");
 			return 0;
-		} else
-			return height;
+		} else return height;
 	}
 
 	public static void setSize(int w, int h) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setSize");
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setSize");
 		else {
 			width = w;
 			height = h;
@@ -74,69 +65,52 @@ public class Display {
 	}
 
 	public static void setWidth(int w) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setWidth");
-		else
-			width = w;
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setWidth");
+		else width = w;
 	}
 
 	public static void setHeight(int h) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setHeight");
-		else
-			height = h;
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setHeight");
+		else height = h;
 	}
 
 	public static void setLocation(String where) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setLocation");
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setLocation");
 		else {
-			if (where == null)
-				frame.setLocationRelativeTo(null);
+			if (where == null) frame.setLocationRelativeTo(null);
 		}
 	}
 
 	public static void setLocation(int x, int y) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setLocation");
-		else
-			frame.setLocation(x, y);
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setLocation");
+		else frame.setLocation(x, y);
 	}
 
 	public static void setTitle(String title) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("setTitle");
-		else
-			frame.setTitle(title);
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setTitle");
+		else frame.setTitle(title);
 	}
 
 	public static void add(Component comp) {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("add");
-		else
-			frame.add(comp);
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else frame.add(comp);
 	}
 
 	public static void show() {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("show");
-		else
-			frame.setVisible(true);
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("show");
+		else frame.setVisible(true);
 	}
 
 	public static void hide() {
-		if (isDisplayType(DisplayType.Console))
-			ThrowImpossible("hide");
-		else
-			frame.setVisible(false);
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("hide");
+		else frame.setVisible(false);
 	}
 
 	public static JFrame getFrame() {
 		if (isDisplayType(DisplayType.Console)) {
 			ThrowNull("a frame");
 			return null;
-		} else
-			return frame;
+		} else return frame;
 	}
 
 	public static void ThrowNull(String message) {
