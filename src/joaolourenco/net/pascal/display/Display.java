@@ -1,6 +1,9 @@
 package joaolourenco.net.pascal.display;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ComponentListener;
 import java.awt.event.ContainerListener;
 import java.awt.event.FocusListener;
@@ -11,6 +14,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import joaolourenco.net.pascal.PascalLike.DisplayType;
 import joaolourenco.net.pascal.exceptions.InvalidDisplayTypeException;
@@ -23,6 +27,7 @@ public class Display {
 	private static int width = 250;
 	private static int height = 250;
 	private static JFrame frame;
+	private static JPanel window;
 
 	public static void create(DisplayType a) {
 		if (a == DisplayType.Console) {
@@ -135,6 +140,77 @@ public class Display {
 		else frame.add(comp);
 	}
 
+	public static void add(Component comp, Font font) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setFont(font);
+			frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, int x, int y, int widht, int height) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setBounds(x, y, widht, height);
+			frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, int x, int y, int widht, int height, Font f) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setFont(f);
+			comp.setBounds(x, y, widht, height);
+			frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, boolean panel) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			if (panel) window.add(comp);
+			else frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, boolean panel, Font f) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setFont(f);
+			if (panel) window.add(comp);
+			else frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, int x, int y, int widht, int height, boolean panel) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setBounds(x, y, widht, height);
+			if (panel) window.add(comp);
+			else frame.add(comp);
+		}
+	}
+
+	public static void add(Component comp, int x, int y, int widht, int height, boolean panel, Font f) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			comp.setFont(f);
+			comp.setBounds(x, y, widht, height);
+			if (panel) window.add(comp);
+			else frame.add(comp);
+		}
+	}
+
+	public static void addPanel() {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			window = new JPanel();
+			frame.getContentPane().add(window);
+			window.setLayout(null);
+			window.setBackground(Color.WHITE);
+		}
+	}
+
 	public static void add(FocusListener l) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
 		else frame.addFocusListener(l);
@@ -194,7 +270,7 @@ public class Display {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setResizable");
 		else frame.setResizable(resizable);
 	}
-	
+
 	public static void setUndecorated(boolean Undecorated) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setUndecorated");
 		else {
