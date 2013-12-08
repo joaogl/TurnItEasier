@@ -3,7 +3,6 @@ package joaolourenco.net.pascal.display;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ComponentListener;
 import java.awt.event.ContainerListener;
 import java.awt.event.FocusListener;
@@ -28,6 +27,7 @@ public class Display {
 	private static int height = 250;
 	private static JFrame frame;
 	private static JPanel window;
+	private static Window windowRunnable;
 
 	public static void create(DisplayType a) {
 		if (a == DisplayType.Console) {
@@ -189,6 +189,45 @@ public class Display {
 			if (panel) window.add(comp);
 			else frame.add(comp);
 		}
+	}
+
+	public static void useRunnable(boolean use) {
+		if (windowRunnable == null) {
+			if (use) {
+				windowRunnable = new Window();
+				windowRunnable.start();
+			} else {
+				try {
+					throw new joaolourenco.net.pascal.exceptions.window.NullPointException(1, "useRun");
+				} catch (ImpossibleActionException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			if (use) windowRunnable.start();
+			else windowRunnable.stop();
+		}
+	}
+
+	public static void useUpdate(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useUpdate(use, classn, methodn);
+		} else windowRunnable.useUpdate(use, classn, methodn);
+	}
+
+	public static void useRender(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useRender(use, classn, methodn);
+		} else windowRunnable.useRender(use, classn, methodn);
+	}
+
+	public static void useTick(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useTick(use, classn, methodn);
+		} else windowRunnable.useTick(use, classn, methodn);
 	}
 
 	public static void add(Component comp, int x, int y, int widht, int height, boolean panel, Font f) {
