@@ -54,6 +54,10 @@ public class Display {
 		else setDisplayType(DisplayType.DynamicConsole);
 	}
 
+	public static void updateWindow() {
+		frame.setSize(width, height);
+	}
+
 	public static void setDisplayType(DisplayType args) {
 		currentDisplayType = args;
 	}
@@ -89,17 +93,24 @@ public class Display {
 		else {
 			width = w;
 			height = h;
+			updateWindow();
 		}
 	}
 
 	public static void setWidth(int w) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setWidth");
-		else width = w;
+		else {
+			width = w;
+			updateWindow();
+		}
 	}
 
 	public static void setHeight(int h) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setHeight");
-		else height = h;
+		else {
+			height = h;
+			updateWindow();
+		}
 	}
 
 	public static void setLocation(String where) {
@@ -164,6 +175,11 @@ public class Display {
 		else frame.addWindowListener(list);
 	}
 
+	public static void pack() {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("pack");
+		else frame.pack();
+	}
+
 	public static void setDefaultCloseOperation(int op) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setDefaultCloseOperation");
 		else frame.setDefaultCloseOperation(op);
@@ -178,10 +194,23 @@ public class Display {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setResizable");
 		else frame.setResizable(resizable);
 	}
-
+	
 	public static void setUndecorated(boolean Undecorated) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setUndecorated");
-		else frame.setUndecorated(Undecorated);
+		else {
+			frame.dispose();
+			frame.setUndecorated(Undecorated);
+			frame.setVisible(true);
+		}
+	}
+
+	public static void setUndecorated(boolean Undecorated, boolean visibility) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setUndecorated");
+		else {
+			frame.dispose();
+			frame.setUndecorated(Undecorated);
+			frame.setVisible(visibility);
+		}
 	}
 
 	public static void hide() {
