@@ -15,7 +15,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import joaolourenco.net.pascal.PascalLike.DisplayType;
+import joaolourenco.net.pascal.TurnItEasier.DisplayType;
 import joaolourenco.net.pascal.exceptions.InvalidDisplayTypeException;
 import joaolourenco.net.pascal.exceptions.console.ImpossibleActionException;
 import joaolourenco.net.pascal.exceptions.console.NullPointException;

@@ -9,7 +9,7 @@ import joaolourenco.net.pascal.display.DynamicConsole;
 import joaolourenco.net.pascal.exceptions.console.ImpossibleActionException;
 import joaolourenco.net.pascal.exceptions.console.NullPointException;
 
-public class PascalLike {
+public class TurnItEasier {
 
 	public enum DisplayType {
 		Console, DynamicConsole, Window;
@@ -23,11 +23,11 @@ public class PascalLike {
 			ThrowImpossibleW("readKey");
 			return null;
 		} else return DynamicConsole.readKey();
-		
+
 	}
 
 	public static String read() {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) return DynamicConsole.read();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
 			Scanner scanIn = new Scanner(System.in);
@@ -59,12 +59,12 @@ public class PascalLike {
 	}
 
 	public static void writeln(String args) {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
 		else System.out.println(args);
 	}
 
 	public static void write(String args) {
-		if (Display.isDisplayType(PascalLike.DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
 		else System.out.print(args);
 	}
 
