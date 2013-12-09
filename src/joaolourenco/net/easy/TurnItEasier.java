@@ -12,6 +12,8 @@ import joaolourenco.net.easy.exceptions.console.NullPointException;
 
 public class TurnItEasier {
 
+	static Scanner scanIn = new Scanner(System.in);
+
 	public enum DisplayType {
 		Console, DynamicConsole, Window;
 	}
@@ -31,9 +33,7 @@ public class TurnItEasier {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
 		else {
 			String out = null;
-			Scanner scanIn = new Scanner(System.in);
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			scanIn.close();
 			return out;
 		}
 	}
@@ -42,9 +42,7 @@ public class TurnItEasier {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
 		else {
 			String out = null;
-			Scanner scanIn = new Scanner(System.in);
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			scanIn.close();
 			return out;
 		}
 	}
@@ -66,9 +64,7 @@ public class TurnItEasier {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
-			Scanner scanIn = new Scanner(System.in);
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			scanIn.close();
 			if (out != null) {
 				try {
 					return Integer.parseInt(out);
@@ -88,9 +84,7 @@ public class TurnItEasier {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
-			Scanner scanIn = new Scanner(System.in);
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			scanIn.close();
 			if (out != null) {
 				try {
 					return Integer.parseInt(out);
@@ -214,6 +208,19 @@ public class TurnItEasier {
 		} catch (ImpossibleActionException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void exit(boolean output) {
+		if (output) writeln("");
+		if (output) writeln("\\*===---===---===---===---===*/");
+		if (output) writeln("Closing Program...");
+		if (output) writeln("Closing streams...");
+		scanIn.close();
+		if (output) writeln("Program Closed...");
+	}
+
+	public static void exit() {
+		scanIn.close();
 	}
 
 }
