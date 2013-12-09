@@ -218,6 +218,7 @@ public class Display {
 
 	public static void useRender(boolean use, String classn, String methodn) {
 		if (windowRunnable == null) {
+			System.out.println("New");
 			windowRunnable = new Window();
 			windowRunnable.useRender(use, classn, methodn);
 		} else windowRunnable.useRender(use, classn, methodn);
@@ -338,6 +339,27 @@ public class Display {
 			ThrowNull("a frame");
 			return null;
 		} else return frame;
+	}
+
+	public static int getFrames() {
+		if (isDisplayType(DisplayType.Console)) {
+			ThrowNull("frames");
+			return 0;
+		} else return Window.getFrames();
+	}
+
+	public static int getTicks() {
+		if (isDisplayType(DisplayType.Console)) {
+			ThrowNull("ticks");
+			return 0;
+		} else return Window.getTicks();
+	}
+
+	public static int getUpdates() {
+		if (isDisplayType(DisplayType.Console)) {
+			ThrowNull("updates");
+			return 0;
+		} else return Window.getUpdates();
 	}
 
 	public static void ThrowNull(String message) {

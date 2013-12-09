@@ -9,11 +9,13 @@ public class Window implements Runnable {
 
 	Thread thread;
 	static boolean running;
-	int tick;
-	int fps;
+	static int tick;
+	static int fps;
+	static int updates;
 	boolean useTicks = false;
 	boolean useUpdates = false;
 	boolean useRenders = false;
+	static boolean usegetFocus = true;
 	String[] classname = new String[3];
 	String[] methodname = new String[3];
 
@@ -49,48 +51,49 @@ public class Window implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
-		long timer2 = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		int frames = 0;
 		int ticks = 0;
+		int ups = 0;
 		Display.getFrame().requestFocus();
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1) {
-				if (useTicks) invokeClass(2);
-				ticks++;
+				if (useTicks) {
+					invokeClass(2);
+					ticks++;
+				}
 				delta--;
 			}
-			if (useRenders) invokeClass(1);
-			frames++;
+			if (useRenders) {
+				invokeClass(1);
+				frames++;
+			}
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				fps = frames;
-				tick = ticks;
+				if (useRenders) fps = frames;
+				if (useTicks) tick = ticks;
+				if (useUpdates) {
+					ups++;
+					updates = ups;
+					invokeClass(0);
+				}
 				ticks = 0;
 				frames = 0;
+				ups = 0;
 			}
-			if (System.currentTimeMillis() - timer2 < 2500) if (useRenders) invokeClass(0);
 		}
 	}
 
 	private void invokeClass(int id) {
 		try {
-			System.out.println(classname[id] + " " + methodname[id] + " " + id);
-			Class<?> c = Class.forName(classname[id]);
-			Method main = c.getDeclaredMethod(methodname[id]);
+			Method main = Class.forName(classname[id]).getDeclaredMethod(methodname[id]);
 			main.invoke(null);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			stop();
-		} catch (NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			stop();
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			stop();
 		}
@@ -112,6 +115,22 @@ public class Window implements Runnable {
 		classname[2] = classn;
 		methodname[2] = methodn;
 		useTicks = use;
+	}
+
+	public static void useGetFocus(boolean use) {
+		usegetFocus = use;
+	}
+
+	public static int getFrames() {
+		return fps;
+	}
+
+	public static int getTicks() {
+		return tick;
+	}
+
+	public static int getUpdates() {
+		return updates;
 	}
 
 }
