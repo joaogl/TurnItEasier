@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
 
+import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
+import joaolourenco.net.easy.exceptions.window.FailedBuildPointerException;
+
 public class Window implements Runnable {
 
 	static Thread thread;
@@ -92,7 +95,17 @@ public class Window implements Runnable {
 	private void invokeClass(int id) {
 		try {
 			Method main = Class.forName(classname[id]).getDeclaredMethod(methodname[id]);
-			main.invoke(null);
+			if (main.isAccessible()) main.invoke(null);
+			else {
+				try {
+					throw new FailedBuildPointerException();
+				} catch (FailedBuildPointerException e) {
+					e.printStackTrace();
+				}
+				if (id == 0) useUpdates = false;
+				else if (id == 1) useRenders = false;
+				else if (id == 2) useTicks = false;
+			}
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			stop();
