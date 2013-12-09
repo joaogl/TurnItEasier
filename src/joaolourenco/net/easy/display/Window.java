@@ -1,14 +1,19 @@
 package joaolourenco.net.easy.display;
 
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
 
-import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
 import joaolourenco.net.easy.exceptions.window.FailedBuildPointerException;
 
-public class Window implements Runnable {
+public class Window extends Canvas implements Runnable {
+	private static final long serialVersionUID = 1L;
 
 	static Thread thread;
 	static boolean running;
@@ -18,9 +23,15 @@ public class Window implements Runnable {
 	boolean useTicks = false;
 	boolean useUpdates = false;
 	boolean useRenders = false;
+	boolean useBufferStrategy = false;
+	boolean useClearScreen = false;
+	boolean returnGraphics = false;
 	static boolean usegetFocus = true;
 	String[] classname = new String[3];
 	String[] methodname = new String[3];
+
+	private static BufferedImage image = new BufferedImage(Display.getWidth(), Display.getHeight(), BufferedImage.TYPE_INT_RGB);
+	private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
 	public static void create() {
 		JFrame frame = new JFrame();
@@ -72,7 +83,7 @@ public class Window implements Runnable {
 				delta--;
 			}
 			if (useRenders) {
-				invokeClass(1);
+				render();
 				frames++;
 			}
 
@@ -108,7 +119,6 @@ public class Window implements Runnable {
 			}
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
-			stop();
 		}
 	}
 
@@ -148,6 +158,56 @@ public class Window implements Runnable {
 
 	public static Thread getThread() {
 		return thread;
+	}
+
+	public static int[] getPixels() {
+		return pixels;
+	}
+
+	public static void setPixels(int[] pixel) {
+		pixels = pixel;
+	}
+
+	public static void clear() {
+		for (int i = 0; i < pixels.length; i++)
+			pixels[i] = 0;
+	}
+
+	public void render() {
+		if (useBufferStrategy) {
+			BufferStrategy bs = getBufferStrategy();
+			if (bs == null) {
+				createBufferStrategy(3);
+				return;
+			}
+
+			Graphics g = bs.getDrawGraphics();
+			if (useClearScreen) clear();
+
+			if (returnGraphics) {
+				try {
+					Method main = Class.forName(classname[1]).getDeclaredMethod(methodname[1]);
+					if (main.isAccessible()) main.invoke(null, g);
+					else {
+						try {
+							throw new FailedBuildPointerException();
+						} catch (FailedBuildPointerException e) {
+							e.printStackTrace();
+						}
+						useRenders = false;
+					}
+				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			} else invokeClass(1);
+
+			g.dispose();
+			bs.show();
+		} else invokeClass(1);
+	}
+
+	public void useReturnGraphics(boolean use) {
+		returnGraphics = use;
 	}
 
 }

@@ -1,13 +1,10 @@
 package joaolourenco.net.easy;
 
 import java.awt.Color;
-import java.io.Console;
-import java.util.Scanner;
 
 import joaolourenco.net.easy.display.Display;
 import joaolourenco.net.easy.display.DynamicConsole;
 import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
-import joaolourenco.net.easy.exceptions.console.NullPointException;
 
 public class TurnItEasier {
 
@@ -26,17 +23,6 @@ public class TurnItEasier {
 
 	}
 
-	public static String read() {
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
-		else {
-			String out = null;
-			Scanner scanIn = new Scanner(System.in);
-			out = scanIn.nextLine();
-			scanIn.close();
-			return out;
-		}
-	}
-
 	public static void delay(int time) {
 		try {
 			Thread.sleep(time);
@@ -45,25 +31,22 @@ public class TurnItEasier {
 		}
 	}
 
-	public static String readPW() {
-		Console c = System.console();
-		if (c != null) return String.valueOf(System.console().readPassword());
-		else {
-			try {
-				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
-			} catch (ImpossibleActionException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-	}
-
-	public static void writeln(String args) {
+	public static void writeln(byte args) {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
 		else System.out.println(args);
 	}
 
-	public static void write(String args) {
+	public static void write(byte args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		else System.out.print(args);
+	}
+
+	public static void writeln(char args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		else System.out.println(args);
+	}
+
+	public static void write(char args) {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
 		else System.out.print(args);
 	}

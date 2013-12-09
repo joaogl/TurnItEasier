@@ -9,7 +9,7 @@ public class DynamicConsole {
 		return null;
 	}
 
-	public static String read() {
+	public static String read(String args) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -61,6 +61,21 @@ public class DynamicConsole {
 	public static void create(boolean usedefaults) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static int read() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public static void writeln(int args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void write(int args) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
