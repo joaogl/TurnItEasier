@@ -334,6 +334,13 @@ public class Display {
 		else frame.setVisible(false);
 	}
 
+	public static JPanel getPanel() {
+		if (isDisplayType(DisplayType.Console)) {
+			ThrowNull("a panel");
+			return null;
+		} else return window;
+	}
+
 	public static JFrame getFrame() {
 		if (isDisplayType(DisplayType.Console)) {
 			ThrowNull("a frame");
