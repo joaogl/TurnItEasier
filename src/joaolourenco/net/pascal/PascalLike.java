@@ -23,6 +23,7 @@ public class PascalLike {
 			ThrowImpossibleW("readKey");
 			return null;
 		} else return DynamicConsole.readKey();
+		
 	}
 
 	public static String read() {
