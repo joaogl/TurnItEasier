@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 public class Window implements Runnable {
 
-	Thread thread;
+	static Thread thread;
 	static boolean running;
 	static int tick;
 	static int fps;
@@ -131,6 +131,10 @@ public class Window implements Runnable {
 
 	public static int getUpdates() {
 		return updates;
+	}
+
+	public static Thread getThread() {
+		return thread;
 	}
 
 }

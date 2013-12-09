@@ -362,6 +362,13 @@ public class Display {
 		} else return Window.getUpdates();
 	}
 
+	public static Thread getThread() {
+		if (isDisplayType(DisplayType.Console)) {
+			ThrowNull("thread");
+			return null;
+		} else return Window.getThread();
+	}
+
 	public static void ThrowNull(String message) {
 		try {
 			throw new NullPointException(message);
