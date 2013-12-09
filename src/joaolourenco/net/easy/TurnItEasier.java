@@ -1,10 +1,14 @@
 package joaolourenco.net.easy;
 
 import java.awt.Color;
+import java.io.Console;
+import java.util.Scanner;
 
 import joaolourenco.net.easy.display.Display;
 import joaolourenco.net.easy.display.DynamicConsole;
+import joaolourenco.net.easy.exceptions.NotIntegerException;
 import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
+import joaolourenco.net.easy.exceptions.console.NullPointException;
 
 public class TurnItEasier {
 
@@ -23,11 +27,90 @@ public class TurnItEasier {
 
 	}
 
-	public static void delay(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	public static String read() {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
+		else {
+			String out = null;
+			Scanner scanIn = new Scanner(System.in);
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			scanIn.close();
+			return out;
+		}
+	}
+
+	public static String readln() {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
+		else {
+			String out = null;
+			Scanner scanIn = new Scanner(System.in);
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			scanIn.close();
+			return out;
+		}
+	}
+
+	public static String readPW() {
+		Console c = System.console();
+		if (c != null) return String.valueOf(System.console().readPassword());
+		else {
+			try {
+				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
+			} catch (ImpossibleActionException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	public static int read(int args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
+		else {
+			String out = null;
+			Scanner scanIn = new Scanner(System.in);
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			scanIn.close();
+			if (out != null) {
+				try {
+					return Integer.parseInt(out);
+				} catch (Exception e) {
+					try {
+						throw new NotIntegerException();
+					} catch (NotIntegerException ee) {
+						ee.printStackTrace();
+					}
+					return 0;
+				}
+			} else return 0;
+		}
+	}
+
+	public static int readln(int args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
+		else {
+			String out = null;
+			Scanner scanIn = new Scanner(System.in);
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			scanIn.close();
+			if (out != null) {
+				try {
+					return Integer.parseInt(out);
+				} catch (Exception e) {
+					return 0;
+				}
+			} else return 0;
+		}
+	}
+
+	public static int readPW(int args) {
+		Console c = System.console();
+		if (c != null) return Integer.parseInt(String.valueOf(System.console().readPassword()));
+		else {
+			try {
+				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
+			} catch (ImpossibleActionException e) {
+				e.printStackTrace();
+			}
+			return 0;
 		}
 	}
 
@@ -47,6 +130,26 @@ public class TurnItEasier {
 	}
 
 	public static void write(char args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		else System.out.print(args);
+	}
+
+	public static void writeln(int args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		else System.out.println(args);
+	}
+
+	public static void write(int args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		else System.out.print(args);
+	}
+
+	public static void writeln(String args) {
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		else System.out.println(args);
+	}
+
+	public static void write(String args) {
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
 		else System.out.print(args);
 	}
@@ -87,6 +190,14 @@ public class TurnItEasier {
 				System.out.println("");
 		} else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("clrscr");
 		else DynamicConsole.slrscr();
+	}
+
+	public static void delay(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void ThrowImpossibleC(String message) {

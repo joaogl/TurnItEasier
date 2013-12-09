@@ -106,19 +106,17 @@ public class Window extends Canvas implements Runnable {
 	private void invokeClass(int id) {
 		try {
 			Method main = Class.forName(classname[id]).getDeclaredMethod(methodname[id]);
-			if (main.isAccessible()) main.invoke(null);
-			else {
-				try {
-					throw new FailedBuildPointerException();
-				} catch (FailedBuildPointerException e) {
-					e.printStackTrace();
-				}
-				if (id == 0) useUpdates = false;
-				else if (id == 1) useRenders = false;
-				else if (id == 2) useTicks = false;
-			}
+			main.invoke(null);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
+			try {
+				throw new FailedBuildPointerException();
+			} catch (FailedBuildPointerException ee) {
+				ee.printStackTrace();
+			}
+			if (id == 0) useUpdates = false;
+			else if (id == 1) useRenders = false;
+			else if (id == 2) useTicks = false;
 		}
 	}
 
@@ -187,17 +185,15 @@ public class Window extends Canvas implements Runnable {
 			if (returnGraphics) {
 				try {
 					Method main = Class.forName(classname[1]).getDeclaredMethod(methodname[1]);
-					if (main.isAccessible()) main.invoke(null, g);
-					else {
-						try {
-							throw new FailedBuildPointerException();
-						} catch (FailedBuildPointerException e) {
-							e.printStackTrace();
-						}
-						useRenders = false;
-					}
+					main.invoke(null, g);
 				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
+					try {
+						throw new FailedBuildPointerException();
+					} catch (FailedBuildPointerException ee) {
+						ee.printStackTrace();
+					}
+					useRenders = false;
 				}
 			} else invokeClass(1);
 
