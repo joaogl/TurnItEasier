@@ -1,13 +1,13 @@
-package joaolourenco.net.pascal;
+package joaolourenco.net.easy;
 
 import java.awt.Color;
 import java.io.Console;
 import java.util.Scanner;
 
-import joaolourenco.net.pascal.display.Display;
-import joaolourenco.net.pascal.display.DynamicConsole;
-import joaolourenco.net.pascal.exceptions.console.ImpossibleActionException;
-import joaolourenco.net.pascal.exceptions.console.NullPointException;
+import joaolourenco.net.easy.display.Display;
+import joaolourenco.net.easy.display.DynamicConsole;
+import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
+import joaolourenco.net.easy.exceptions.console.NullPointException;
 
 public class TurnItEasier {
 
@@ -116,7 +116,7 @@ public class TurnItEasier {
 
 	public static void ThrowImpossibleW(String message) {
 		try {
-			throw new joaolourenco.net.pascal.exceptions.window.ImpossibleActionException(message);
+			throw new joaolourenco.net.easy.exceptions.window.ImpossibleActionException(message);
 		} catch (ImpossibleActionException e) {
 			e.printStackTrace();
 		}

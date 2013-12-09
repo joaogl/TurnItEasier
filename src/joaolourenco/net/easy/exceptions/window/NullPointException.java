@@ -1,4 +1,4 @@
-package joaolourenco.net.pascal.exceptions.window;
+package joaolourenco.net.easy.exceptions.window;
 
 public class NullPointException extends UnsupportedOperationException {
 	private static final long serialVersionUID = 1L;

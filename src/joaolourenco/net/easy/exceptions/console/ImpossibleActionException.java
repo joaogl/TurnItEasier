@@ -1,4 +1,4 @@
-package joaolourenco.net.pascal.exceptions.console;
+package joaolourenco.net.easy.exceptions.console;
 
 public class ImpossibleActionException extends UnsupportedOperationException {
 	private static final long serialVersionUID = 1L;

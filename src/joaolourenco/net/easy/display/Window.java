@@ -1,4 +1,4 @@
-package joaolourenco.net.pascal.display;
+package joaolourenco.net.easy.display;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

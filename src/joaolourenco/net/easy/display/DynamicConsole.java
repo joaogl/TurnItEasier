@@ -1,4 +1,4 @@
-package joaolourenco.net.pascal.display;
+package joaolourenco.net.easy.display;
 
 import java.awt.Color;
 
