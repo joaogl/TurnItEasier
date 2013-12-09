@@ -59,24 +59,29 @@ public class Display {
 		else setDisplayType(DisplayType.DynamicConsole);
 	}
 
-	public static void updateWindow() {
-		frame.setSize(width, height);
-	}
-
-	public static void setDisplayType(DisplayType args) {
-		currentDisplayType = args;
-	}
-
-	public static void setFrame(JFrame args) {
-		frame = args;
+	public static boolean isDisplayCreated() {
+		if (currentDisplayType == null) return false;
+		else return true;
 	}
 
 	public static boolean isDisplayType(DisplayType a) {
 		return (currentDisplayType == a);
 	}
 
+	public static void setDisplayType(DisplayType args) {
+		currentDisplayType = args;
+	}
+
 	public static DisplayType getDisplayType() {
 		return currentDisplayType;
+	}
+
+	public static void updateWindow() {
+		frame.setSize(width, height);
+	}
+
+	public static void setFrame(JFrame args) {
+		frame = args;
 	}
 
 	public static int getWidth() {
@@ -191,46 +196,6 @@ public class Display {
 		}
 	}
 
-	public static void useRunnable(boolean use) {
-		if (windowRunnable == null) {
-			if (use) {
-				windowRunnable = new Window();
-				windowRunnable.start();
-			} else {
-				try {
-					throw new joaolourenco.net.easy.exceptions.window.NullPointException(1, "useRun");
-				} catch (ImpossibleActionException e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			if (use) windowRunnable.start();
-			else windowRunnable.stop();
-		}
-	}
-
-	public static void useUpdate(boolean use, String classn, String methodn) {
-		if (windowRunnable == null) {
-			windowRunnable = new Window();
-			windowRunnable.useUpdate(use, classn, methodn);
-		} else windowRunnable.useUpdate(use, classn, methodn);
-	}
-
-	public static void useRender(boolean use, String classn, String methodn) {
-		if (windowRunnable == null) {
-			System.out.println("New");
-			windowRunnable = new Window();
-			windowRunnable.useRender(use, classn, methodn);
-		} else windowRunnable.useRender(use, classn, methodn);
-	}
-
-	public static void useTick(boolean use, String classn, String methodn) {
-		if (windowRunnable == null) {
-			windowRunnable = new Window();
-			windowRunnable.useTick(use, classn, methodn);
-		} else windowRunnable.useTick(use, classn, methodn);
-	}
-
 	public static void add(Component comp, int x, int y, int widht, int height, boolean panel, Font f) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
 		else {
@@ -291,6 +256,46 @@ public class Display {
 		else frame.addWindowListener(list);
 	}
 
+	public static void useRunnable(boolean use) {
+		if (windowRunnable == null) {
+			if (use) {
+				windowRunnable = new Window();
+				windowRunnable.start();
+			} else {
+				try {
+					throw new joaolourenco.net.easy.exceptions.window.NullPointException(1, "useRun");
+				} catch (ImpossibleActionException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			if (use) windowRunnable.start();
+			else windowRunnable.stop();
+		}
+	}
+
+	public static void useUpdate(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useUpdate(use, classn, methodn);
+		} else windowRunnable.useUpdate(use, classn, methodn);
+	}
+
+	public static void useRender(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			System.out.println("New");
+			windowRunnable = new Window();
+			windowRunnable.useRender(use, classn, methodn);
+		} else windowRunnable.useRender(use, classn, methodn);
+	}
+
+	public static void useTick(boolean use, String classn, String methodn) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useTick(use, classn, methodn);
+		} else windowRunnable.useTick(use, classn, methodn);
+	}
+
 	public static void pack() {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("pack");
 		else frame.pack();
@@ -299,11 +304,6 @@ public class Display {
 	public static void setDefaultCloseOperation(int op) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setDefaultCloseOperation");
 		else frame.setDefaultCloseOperation(op);
-	}
-
-	public static void show() {
-		if (isDisplayType(DisplayType.Console)) ThrowImpossible("show");
-		else frame.setVisible(true);
 	}
 
 	public static void setResizable(boolean resizable) {
@@ -327,11 +327,6 @@ public class Display {
 			frame.setUndecorated(Undecorated);
 			frame.setVisible(visibility);
 		}
-	}
-
-	public static void hide() {
-		if (isDisplayType(DisplayType.Console)) ThrowImpossible("hide");
-		else frame.setVisible(false);
 	}
 
 	public static JPanel getPanel() {
@@ -374,6 +369,16 @@ public class Display {
 			ThrowNull("thread");
 			return null;
 		} else return Window.getThread();
+	}
+
+	public static void show() {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("show");
+		else frame.setVisible(true);
+	}
+
+	public static void hide() {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("hide");
+		else frame.setVisible(false);
 	}
 
 	public static void ThrowNull(String message) {
