@@ -23,8 +23,8 @@ import joaolourenco.net.easy.exceptions.console.NullPointException;
 public class Display {
 
 	private static DisplayType currentDisplayType;
-	private static int width = 250;
-	private static int height = 250;
+	private static int width = 500;
+	private static int height = 500;
 	private static JFrame frame;
 	private static JPanel window;
 	private static Window windowRunnable;
@@ -381,11 +381,11 @@ public class Display {
 		else frame.setVisible(false);
 	}
 
-	public static void useReturnGraphics(boolean use) {
+	public static void useRenderWithGraphics(boolean use, String agrs, String args2) {
 		if (windowRunnable == null) {
 			windowRunnable = new Window();
-			windowRunnable.useReturnGraphics(use);
-		} else windowRunnable.useReturnGraphics(use);
+			windowRunnable.useRenderWithGraphics(use, agrs, args2);
+		} else windowRunnable.useRenderWithGraphics(use, agrs, args2);
 	}
 
 	public static void useBufferStrategy(boolean use) {
@@ -404,6 +404,19 @@ public class Display {
 			windowRunnable = new Window();
 			windowRunnable.useClearScreen(use);
 		} else windowRunnable.useClearScreen(use);
+	}
+
+	@SuppressWarnings("static-access")
+	public static int[] getPixels() {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			return windowRunnable.getPixels();
+		} else return windowRunnable.getPixels();
+	}
+
+	@SuppressWarnings("static-access")
+	public static void setPixels(int[] pixels) {
+		windowRunnable.setPixels(pixels);
 	}
 
 	public static void ThrowNull(String message) {

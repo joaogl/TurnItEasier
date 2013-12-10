@@ -27,10 +27,12 @@ public class Window extends Canvas implements Runnable {
 	boolean useClearScreen = false;
 	boolean returnGraphics = false;
 	static boolean usegetFocus = true;
-	String[] classname = new String[3];
-	String[] methodname = new String[3];
-	Method[] method = new Method[3];
+	String[] classname = new String[4];
+	String[] methodname = new String[4];
+	Method[] method = new Method[4];
 	Class<?>[] methodargs;
+	int id = 0;
+	boolean done = false;
 
 	private static BufferedImage image = new BufferedImage(Display.getWidth(), Display.getHeight(), BufferedImage.TYPE_INT_RGB);
 	private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -84,14 +86,14 @@ public class Window extends Canvas implements Runnable {
 				}
 				delta--;
 			}
-			if (useRenders) {
+			if (useRenders || returnGraphics) {
 				render();
 				frames++;
 			}
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				if (useRenders) fps = frames;
+				if (useRenders || returnGraphics) fps = frames;
 				if (useTicks) tick = ticks;
 				if (useUpdates) {
 					ups++;
@@ -183,42 +185,47 @@ public class Window extends Canvas implements Runnable {
 				createBufferStrategy(3);
 				return;
 			}
-
 			Graphics g = bs.getDrawGraphics();
 			if (useClearScreen) clear();
+			if (useRenders) invokeClass(1);
+
+			g.drawImage(image, 0, 0, Display.getWidth(), Display.getHeight(), null);
 
 			if (returnGraphics) {
 				try {
-					if (method[1] == null) {
-						Class<?> func = Class.forName(classname[1]);
+					if (method[3] == null) {
+						Class<?> func = Class.forName(classname[3]);
 						Method[] allMethods = func.getDeclaredMethods();
 						for (Method m : allMethods) {
-							if (methodname[1].equals(m.getName())) methodargs = m.getParameterTypes();
+							if (methodname[3].equals(m.getName()) && !done) {
+								methodargs = m.getParameterTypes();
+								if (id == 0) done = true;
+							}
 						}
-						Method m = func.getDeclaredMethod(methodname[1], methodargs);
+						Method m = func.getDeclaredMethod(methodname[3], methodargs);
 						m.invoke(null, (Object) g);
-						method[1] = m;
-					} else method[1].invoke(null, (Object) g);
+						method[3] = m;
+					} else method[3].invoke(null, (Object) g);
 				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-					/*
-					try {
-						throw new FailedBuildPointerException();
-					} catch (FailedBuildPointerException ee) {
-						ee.printStackTrace();
+					if (id == 0) {
+						id = 1;
+						method[3] = null;
+						done = false;
+					} else {
+						e.printStackTrace();
+						try {
+							throw new FailedBuildPointerException();
+						} catch (FailedBuildPointerException ee) {
+							ee.printStackTrace();
+						}
+						returnGraphics = false;
 					}
-					*/
-					useRenders = false;
 				}
-			} else invokeClass(1);
+			}
 
 			g.dispose();
 			bs.show();
-		} else invokeClass(1);
-	}
-
-	public void useReturnGraphics(boolean use) {
-		returnGraphics = use;
+		} else if (useRenders) invokeClass(1);
 	}
 
 	public void useBufferStrategy(boolean use) {
@@ -227,6 +234,12 @@ public class Window extends Canvas implements Runnable {
 
 	public void useClearScreen(boolean use) {
 		useClearScreen = use;
+	}
+
+	public void useRenderWithGraphics(boolean use, String args, String args2) {
+		returnGraphics = use;
+		classname[3] = args;
+		methodname[3] = args2;
 	}
 
 }
