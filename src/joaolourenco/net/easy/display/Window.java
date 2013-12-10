@@ -29,6 +29,8 @@ public class Window extends Canvas implements Runnable {
 	static boolean usegetFocus = true;
 	String[] classname = new String[3];
 	String[] methodname = new String[3];
+	Method[] method = new Method[3];
+	Class<?>[] methodargs;
 
 	private static BufferedImage image = new BufferedImage(Display.getWidth(), Display.getHeight(), BufferedImage.TYPE_INT_RGB);
 	private static int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -105,8 +107,11 @@ public class Window extends Canvas implements Runnable {
 
 	private void invokeClass(int id) {
 		try {
-			Method main = Class.forName(classname[id]).getDeclaredMethod(methodname[id]);
-			main.invoke(null);
+			if (method[id] == null) {
+				Method main = Class.forName(classname[id]).getDeclaredMethod(methodname[id]);
+				method[id] = main;
+				main.invoke(null);
+			} else method[id].invoke(null);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			try {
@@ -184,15 +189,25 @@ public class Window extends Canvas implements Runnable {
 
 			if (returnGraphics) {
 				try {
-					Method main = Class.forName(classname[1]).getDeclaredMethod(methodname[1]);
-					main.invoke(null, g);
+					if (method[1] == null) {
+						Class<?> func = Class.forName(classname[1]);
+						Method[] allMethods = func.getDeclaredMethods();
+						for (Method m : allMethods) {
+							if (methodname[1].equals(m.getName())) methodargs = m.getParameterTypes();
+						}
+						Method m = func.getDeclaredMethod(methodname[1], methodargs);
+						m.invoke(null, (Object) g);
+						method[1] = m;
+					} else method[1].invoke(null, (Object) g);
 				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
+					/*
 					try {
 						throw new FailedBuildPointerException();
 					} catch (FailedBuildPointerException ee) {
 						ee.printStackTrace();
 					}
+					*/
 					useRenders = false;
 				}
 			} else invokeClass(1);
@@ -204,6 +219,14 @@ public class Window extends Canvas implements Runnable {
 
 	public void useReturnGraphics(boolean use) {
 		returnGraphics = use;
+	}
+
+	public void useBufferStrategy(boolean use) {
+		useBufferStrategy = use;
+	}
+
+	public void useClearScreen(boolean use) {
+		useClearScreen = use;
 	}
 
 }

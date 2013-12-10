@@ -381,6 +381,31 @@ public class Display {
 		else frame.setVisible(false);
 	}
 
+	public static void useReturnGraphics(boolean use) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useReturnGraphics(use);
+		} else windowRunnable.useReturnGraphics(use);
+	}
+
+	public static void useBufferStrategy(boolean use) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			add(windowRunnable);
+			windowRunnable.useBufferStrategy(use);
+		} else {
+			add(windowRunnable);
+			windowRunnable.useBufferStrategy(use);
+		}
+	}
+
+	public static void useClearScreen(boolean use) {
+		if (windowRunnable == null) {
+			windowRunnable = new Window();
+			windowRunnable.useClearScreen(use);
+		} else windowRunnable.useClearScreen(use);
+	}
+
 	public static void ThrowNull(String message) {
 		try {
 			throw new NullPointException(message);
