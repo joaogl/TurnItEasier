@@ -123,6 +123,11 @@ public class Display {
 		}
 	}
 
+	public static void setAlwaysOnTop(boolean use) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setAlwaysOnTop");
+		else frame.setAlwaysOnTop(use);
+	}
+
 	public static void setLocation(String where) {
 		if (isDisplayType(DisplayType.Console)) ThrowImpossible("setLocation");
 		else {
@@ -213,6 +218,14 @@ public class Display {
 			frame.getContentPane().add(window);
 			window.setLayout(null);
 			window.setBackground(Color.WHITE);
+		}
+	}
+
+	public static void setBackground(Color c) {
+		if (isDisplayType(DisplayType.Console)) ThrowImpossible("add");
+		else {
+			if (window != null) window.setBackground(c);
+			if (frame != null) frame.setBackground(c);
 		}
 	}
 
@@ -404,6 +417,14 @@ public class Display {
 			windowRunnable = new Window();
 			windowRunnable.useClearScreen(use);
 		} else windowRunnable.useClearScreen(use);
+	}
+
+	public static void repaintFrame() {
+		frame.repaint();
+	}
+
+	public static void repaintPanel() {
+		window.repaint();
 	}
 
 	@SuppressWarnings("static-access")

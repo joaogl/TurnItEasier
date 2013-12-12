@@ -90,7 +90,6 @@ public class Window extends Canvas implements Runnable {
 				render();
 				frames++;
 			}
-
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				if (useRenders || returnGraphics) fps = frames;
