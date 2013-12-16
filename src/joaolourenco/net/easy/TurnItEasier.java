@@ -14,15 +14,26 @@ public class TurnItEasier {
 
 	static Scanner scanIn;
 
+	/**
+	 * It contains all the DisplayTypes available by the API.
+	 */
 	public enum DisplayType {
 		Console, DynamicConsole, Window;
 	}
 
+	/**
+	 * It creates the console streams to reads.
+	 */
 	public static void createConsoleStreams() {
 		Display.create(DisplayType.Console);
 		scanIn = new Scanner(System.in);
 	}
 
+	/**
+	 * Returns the key that as been pressed in Bytes.
+	 * <p>
+	 * If an error occur it is going to throw an ImpossibleActionException.
+	 */
 	public static Byte readKey() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
 		if (Display.isDisplayType(DisplayType.Console)) {
