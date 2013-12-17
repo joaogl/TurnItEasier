@@ -45,6 +45,12 @@ public class TurnItEasier {
 	 * @return the key that as been pressed in Bytes.
 	 * @throw ImpossibleActionException Thrown when the type console is being used or window.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW()
+	 * @see #readPW(int)
 	 */
 	public static Byte readKey() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -65,6 +71,12 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @return the user input text as a String.
 	 * @category Read
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW()
+	 * @see #readPW(int)
 	 */
 	public static String read() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -83,6 +95,12 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @return the user input text as a String.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln(int)
+	 * @see #readPW()
+	 * @see #readPW(int)
 	 */
 	public static String readln() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -102,6 +120,12 @@ public class TurnItEasier {
 	 * @return the user input password as a String.
 	 * @throw NullPointException Thrown where the Java console isn't found.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW(int)
 	 */
 	public static String readPW() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -127,6 +151,12 @@ public class TurnItEasier {
 	 * @return the user input number as a Integer.
 	 * @throw NotIntegerException Thrown when the return value isn't a integer.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW()
 	 */
 	public static int read(int args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -159,6 +189,12 @@ public class TurnItEasier {
 	 * @return the user input number as a Integer.
 	 * @throw NotIntegerException Thrown when the input is not an integer.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readPW()
+	 * @see #readPW(int)
 	 */
 	public static int readln(int args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -191,6 +227,12 @@ public class TurnItEasier {
 	 * @return the user input number as a Integer.
 	 * @throw NullPointException Thrown when the Java console isn't available.
 	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW()
 	 */
 	public static int readPW(int args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -214,6 +256,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a byte.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void writeln(byte args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -229,6 +278,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a byte.
 	 * @category Write
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void write(byte args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -244,6 +300,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a char.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void writeln(char args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -259,6 +322,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a char.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void write(char args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -274,6 +344,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a integer.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(String)
 	 */
 	public static void writeln(int args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -289,6 +366,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a integer.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void write(int args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -304,6 +388,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a String.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #write(String)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
 	 */
 	public static void writeln(String args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -319,6 +410,13 @@ public class TurnItEasier {
 	 * @param args
 	 *            it is what you want to write as a String.
 	 * @category Write
+	 * @see #write(byte)
+	 * @see #write(char)
+	 * @see #write(int)
+	 * @see #writeln(byte)
+	 * @see #writeln(char)
+	 * @see #writeln(int)
+	 * @see #writeln(String)
 	 */
 	public static void write(String args) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -335,6 +433,10 @@ public class TurnItEasier {
 	 *            the desired color for the background as integer.
 	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category BackGroundColor
+	 * @see #TextBackground(Color)
+	 * @see #TextColor(Color)
+	 * @see #TextColor(int)
+	 * 
 	 */
 	public static void TextBackground(int color) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -352,6 +454,9 @@ public class TurnItEasier {
 	 *            the desired color for the background as Color.
 	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category BackGroundColor
+	 * @see #TextBackground(int)
+	 * @see #TextColor(Color)
+	 * @see #TextColor(int)
 	 */
 	public static void TextBackground(Color color) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -369,6 +474,9 @@ public class TurnItEasier {
 	 *            the desired color for the background as integer.
 	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category TextColor
+	 * @see #TextBackground(Color)
+	 * @see #TextBackground(int)
+	 * @see #TextColor(Color)
 	 */
 	public static void TextColor(int color) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -386,6 +494,9 @@ public class TurnItEasier {
 	 *            the desired color for the background as integer.
 	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category TextColor
+	 * @see #TextBackground(Color)
+	 * @see #TextBackground(int)
+	 * @see #TextColor(int)
 	 */
 	public static void TextColor(Color color) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -405,6 +516,10 @@ public class TurnItEasier {
 	 *            y the y value of where to go.
 	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category WindowNavigation
+	 * @see #clrscr()
+	 * @see #delay(int)
+	 * @see #exit()
+	 * @see #exit(boolean)
 	 */
 	public static void GotoXY(int x, int y) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -420,6 +535,10 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @throw ImpossibleActionException Thrown when the DisplayType is window.
 	 * @category ConsoleText
+	 * @see #delay(int)
+	 * @see #GotoXY(int, int)
+	 * @see #exit()
+	 * @see #exit(boolean)
 	 */
 	public static void clrscr() {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -439,6 +558,10 @@ public class TurnItEasier {
 	 *            value of time as integer in milliseconds.
 	 * @throw InterruptedException Thrown when the Thread is Interrupted for somereason.
 	 * @category AplicationControl
+	 * @see #clrscr()
+	 * @see #GotoXY(int, int)
+	 * @see #exit()
+	 * @see #exit(boolean)
 	 */
 	public static void delay(int time) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
@@ -457,6 +580,10 @@ public class TurnItEasier {
 	 * @param output
 	 *            true or false to use or not the output text.
 	 * @category AplicationControl
+	 * @see #clrscr()
+	 * @see #delay(int)
+	 * @see #GotoXY(int, int)
+	 * @see #exit()
 	 */
 	public static void exit(boolean output) {
 		if (output) writeln("");
@@ -473,6 +600,10 @@ public class TurnItEasier {
 	 * 
 	 * @author João Lourenço
 	 * @category AplicationControl
+	 * @see #clrscr()
+	 * @see #delay(int)
+	 * @see #GotoXY(int, int)
+	 * @see #exit(boolean)
 	 */
 	public static void exit() {
 		if (scanIn != null) scanIn.close();
@@ -485,6 +616,7 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @throw ImpossibleActionException Thrown always.
 	 * @category AplicationControl
+	 * @see #ThrowImpossibleW(String)
 	 */
 	private static void ThrowImpossibleC(String message) {
 		try {
@@ -501,6 +633,7 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @throw ImpossibleActionException Thrown always.
 	 * @category AplicationControl
+	 * @see #ThrowImpossibleC(String)
 	 */
 	private static void ThrowImpossibleW(String message) {
 		try {
