@@ -32,7 +32,7 @@ public class TurnItEasier {
 	 * @author João Lourenço
 	 * @category Streams
 	 */
-	public static void createConsoleStreams() {
+	private static void createConsoleStreams() {
 		Display.create(DisplayType.Console);
 		scanIn = new Scanner(System.in);
 	}

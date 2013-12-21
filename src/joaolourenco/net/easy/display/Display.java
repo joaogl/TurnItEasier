@@ -3,7 +3,6 @@ package joaolourenco.net.easy.display;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ComponentListener;
 import java.awt.event.ContainerListener;
 import java.awt.event.FocusListener;
@@ -12,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowListener;
-import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,18 +29,6 @@ public class Display {
 	private static JPanel window;
 	private static Window windowRunnable;
 
-	/**
-	 * Returns an Image object that can then be painted on the screen. The url argument must specify an absolute {@link URL}. The name argument is a specifier that is relative to the url argument.
-	 * <p>
-	 * This method always returns immediately, whether or not the image exists. When this applet attempts to draw the image on the screen, the data will be loaded. The graphics primitives that draw the image will incrementally paint on the screen.
-	 * 
-	 * @param url
-	 *            an absolute URL giving the base location of the image
-	 * @param name
-	 *            the location of the image, relative to the url argument
-	 * @return the image at the specified URL
-	 * @see Image
-	 */
 	public static void create(DisplayType a) {
 		if (a == DisplayType.Console) {
 		} else if (a == DisplayType.DynamicConsole) DynamicConsole.create();
@@ -454,7 +440,7 @@ public class Display {
 		windowRunnable.setPixels(pixels);
 	}
 
-	public static void ThrowNull(String message) {
+	private static void ThrowNull(String message) {
 		try {
 			throw new NullPointException(message);
 		} catch (NullPointException e) {
@@ -462,7 +448,7 @@ public class Display {
 		}
 	}
 
-	public static void ThrowImpossible(String message) {
+	private static void ThrowImpossible(String message) {
 		try {
 			throw new ImpossibleActionException(message);
 		} catch (ImpossibleActionException e) {

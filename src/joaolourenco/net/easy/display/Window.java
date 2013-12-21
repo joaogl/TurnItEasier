@@ -40,7 +40,7 @@ public class Window extends Canvas implements Runnable {
 	public static void create() {
 		JFrame frame = new JFrame();
 		frame.setResizable(false);
-		frame.setTitle("PascalLike");
+		frame.setTitle("TurnItEasier");
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 500);
