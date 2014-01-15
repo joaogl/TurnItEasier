@@ -398,28 +398,6 @@ public class TurnItEasier {
 	}
 
 	/**
-	 * It is to make sure the scanners are closed.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param output
-	 *            true or false to use or not the output text.
-	 * @category AplicationControl
-	 * @see #clrscr()
-	 * @see #delay(int)
-	 * @see #GotoXY(int, int)
-	 * @see #exit()
-	 */
-	public static void exit(boolean output) {
-		if (output) writeln("");
-		if (output) writeln("\\*===---===---===---===---===*/");
-		if (output) writeln("Closing Program...");
-		if (output && (scanIn != null)) writeln("Closing streams...");
-		if (scanIn != null) scanIn.close();
-		if (output) writeln("Program Closed...");
-	}
-
-	/**
 	 * It is to make sure the scanners are closed without output text.
 	 * <p>
 	 * 
