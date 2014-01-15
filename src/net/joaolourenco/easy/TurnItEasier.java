@@ -28,6 +28,24 @@ public class TurnItEasier {
 	static Scanner scanIn;
 
 	/**
+	 * This is the API Name
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static String NAME = "TurnItEasier";
+
+	/**
+	 * This is the API Version
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
+	public static String VERSION = "BETA V1.0.1";
+
+	/**
 	 * It is the logger that the API uses to print errors to the user.
 	 * <p>
 	 * 
@@ -410,6 +428,21 @@ public class TurnItEasier {
 	 */
 	public static void exit() {
 		if (scanIn != null) scanIn.close();
+	}
+
+	/**
+	 * It is to make sure the scanners are closed without output text.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @category AplicationControl
+	 * @see #clrscr()
+	 * @see #delay(int)
+	 * @see #GotoXY(int, int)
+	 * @see #exit(boolean)
+	 */
+	public static String version() {
+		return NAME + " - " + VERSION;
 	}
 
 }
