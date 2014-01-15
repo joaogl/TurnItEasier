@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import net.joaolourenco.easy.display.Display;
 import net.joaolourenco.easy.display.DynamicConsole;
+import net.joaolourenco.easy.display.Window;
 import net.joaolourenco.easy.exceptions.NotIntegerException;
 import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
 import net.joaolourenco.easy.exceptions.console.NullPointException;
@@ -28,6 +29,14 @@ public class TurnItEasier {
 	 * @category Variables
 	 */
 	static Scanner scanIn;
+
+	/**
+	 * It is the logger that the API uses to print errors to the user.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
 	static Logger logger = Logger.getLogger("TurnItEasier");
 
 	/**
@@ -49,8 +58,10 @@ public class TurnItEasier {
 	 * @category Streams
 	 */
 	private static void createConsoleStreams() {
-		Display.create(DisplayType.Console);
-		scanIn = new Scanner(System.in);
+		if (!Display.isDisplayCreated()) {
+			Display.create(DisplayType.Console);
+			scanIn = new Scanner(System.in);
+		}
 	}
 
 	/**
@@ -58,8 +69,7 @@ public class TurnItEasier {
 	 * <p>
 	 * 
 	 * @author João Lourenço
-	 * @return the key that as been pressed in Bytes.
-	 * @throw ImpossibleActionException Thrown when the type console is being used or window.
+	 * @return the key that as been pressed in Int.
 	 * @category Read
 	 * @see #read()
 	 * @see #read(int)
@@ -68,16 +78,13 @@ public class TurnItEasier {
 	 * @see #readPW()
 	 * @see #readPW(int)
 	 */
-	public static Byte readKey() {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
+	public static int readKey() {
+		createConsoleStreams();
 		if (Display.isDisplayType(DisplayType.Console)) {
-			ThrowImpossibleC("readKey");
-			return null;
-		} else if (Display.isDisplayType(DisplayType.Window)) {
-			ThrowImpossibleW("readKey");
-			return null;
-		} else return DynamicConsole.readKey();
-
+			logger.severe("The requested action(readKey) is not possible on default console.");
+			return 0;
+		} else if (Display.isDisplayType(DisplayType.Window)) return Window.getKey();
+		else return DynamicConsole.readKey();
 	}
 
 	/**
@@ -95,8 +102,8 @@ public class TurnItEasier {
 	 * @see #readPW(int)
 	 */
 	public static String read() {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
@@ -119,7 +126,7 @@ public class TurnItEasier {
 	 * @see #readPW(int)
 	 */
 	public static String readln() {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
+		createConsoleStreams();
 		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
 		else {
 			String out = null;
@@ -260,9 +267,6 @@ public class TurnItEasier {
 		}
 	}
 
-	
-	
-	
 	public static void read(String varToAssignTo) {
 		if (!Display.isDisplayCreated()) createConsoleStreams();
 		String out = null;
@@ -271,10 +275,6 @@ public class TurnItEasier {
 			System.out.println("A: " + varToAssignTo);
 		}
 	}
-	
-	
-	
-	
 
 	/**
 	 * It is used to write on the screen and go to the next line.

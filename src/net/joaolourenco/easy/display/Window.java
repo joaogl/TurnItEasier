@@ -243,4 +243,9 @@ public class Window extends Canvas implements Runnable {
 		methodname[3] = args2;
 	}
 
+	public static int getKey() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

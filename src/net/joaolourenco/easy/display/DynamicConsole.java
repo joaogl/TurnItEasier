@@ -63,9 +63,9 @@ public class DynamicConsole {
 
 	}
 
-	public static int read() {
+	public static String read() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	public static void writeln(int args) {
