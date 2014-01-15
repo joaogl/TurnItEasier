@@ -9,19 +9,14 @@ public class DynamicConsole {
 		return null;
 	}
 
-	public static String read(String args) {
+	public static int read(int args) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public static String read() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public static void writeln(String args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static void write(String args) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public static void slrscr() {
@@ -63,19 +58,18 @@ public class DynamicConsole {
 
 	}
 
-	public static String read() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static void writeln(int args) {
+	public static void writeln(Object args) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public static void write(int args) {
+	public static void write(Object args) {
 		// TODO Auto-generated method stub
+	}
 
+	public static int readPW(int args) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

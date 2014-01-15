@@ -8,9 +8,6 @@ import java.util.logging.Logger;
 import net.joaolourenco.easy.display.Display;
 import net.joaolourenco.easy.display.DynamicConsole;
 import net.joaolourenco.easy.display.Window;
-import net.joaolourenco.easy.exceptions.NotIntegerException;
-import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
-import net.joaolourenco.easy.exceptions.console.NullPointException;
 
 /**
  * This is the main class of the API. It is used for all the console functions.
@@ -127,7 +124,7 @@ public class TurnItEasier {
 	 */
 	public static String readln() {
 		createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read("a");
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
 		else {
 			String out = null;
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
@@ -141,7 +138,6 @@ public class TurnItEasier {
 	 * 
 	 * @author João Lourenço
 	 * @return the user input password as a String.
-	 * @throw NullPointException Thrown where the Java console isn't found.
 	 * @category Read
 	 * @see #read()
 	 * @see #read(int)
@@ -151,17 +147,11 @@ public class TurnItEasier {
 	 * @see #readPW(int)
 	 */
 	public static String readPW() {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
+		createConsoleStreams();
 		Console c = System.console();
 		if (c != null) return String.valueOf(System.console().readPassword());
-		else {
-			try {
-				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
-			} catch (NullPointException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
+		else logger.severe("No Java console found.(It as to be exported in order to run properly)");
+		return null;
 	}
 
 	/**
@@ -172,7 +162,6 @@ public class TurnItEasier {
 	 * @param args
 	 *            type in any number to assume the return as an integer.
 	 * @return the user input number as a Integer.
-	 * @throw NotIntegerException Thrown when the return value isn't a integer.
 	 * @category Read
 	 * @see #read()
 	 * @see #read(int)
@@ -182,8 +171,43 @@ public class TurnItEasier {
 	 * @see #readPW()
 	 */
 	public static int read(int args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read(args);
+		else if (Display.isDisplayType(DisplayType.Window)) logger.severe("The requested action(readKey) is not possible on default console.");
+		else {
+			String out = null;
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			if (out != null) {
+				try {
+					return Integer.parseInt(out);
+				} catch (Exception e) {
+					logger.severe("The input is not an Integer!");
+					return 0;
+				}
+			}
+		}
+		return 0;
+	}
+
+	/**
+	 * It is used to get numbers from the user and go to the next line.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @param args
+	 *            type in any number to assume the return as an integer.
+	 * @return the user input number as a Integer.
+	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readPW()
+	 * @see #readPW(int)
+	 */
+	public static int readln(int args) {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read(args);
 		else {
 			String out = null;
 			if (scanIn.hasNextLine()) out = scanIn.nextLine();
@@ -199,44 +223,6 @@ public class TurnItEasier {
 	}
 
 	/**
-	 * It is used to get numbers from the user and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            type in any number to assume the return as an integer.
-	 * @return the user input number as a Integer.
-	 * @throw NotIntegerException Thrown when the input is not an integer.
-	 * @category Read
-	 * @see #read()
-	 * @see #read(int)
-	 * @see #readKey()
-	 * @see #readln()
-	 * @see #readPW()
-	 * @see #readPW(int)
-	 */
-	public static int readln(int args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
-		else {
-			String out = null;
-			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			if (out != null) {
-				try {
-					return Integer.parseInt(out);
-				} catch (Exception e) {
-					try {
-						throw new NotIntegerException();
-					} catch (NotIntegerException ee) {
-						ee.printStackTrace();
-					}
-					return 0;
-				}
-			} else return 0;
-		}
-	}
-
-	/**
 	 * It is used to get password from the user as an Integer.
 	 * <p>
 	 * 
@@ -244,7 +230,6 @@ public class TurnItEasier {
 	 * @param args
 	 *            type in any number to assume the return as an integer.
 	 * @return the user input number as a Integer.
-	 * @throw NullPointException Thrown when the Java console isn't available.
 	 * @category Read
 	 * @see #read()
 	 * @see #read(int)
@@ -254,243 +239,73 @@ public class TurnItEasier {
 	 * @see #readPW()
 	 */
 	public static int readPW(int args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		Console c = System.console();
-		if (c != null) return Integer.parseInt(String.valueOf(System.console().readPassword()));
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.readPW(args);
+		else {
+			Console c = System.console();
+			if (c != null) return Integer.parseInt(String.valueOf(System.console().readPassword()));
+			else {
+				logger.severe("No Java console found.(It as to be exported in order to run properly)");
+				return 0;
+			}
+		}
+	}
+
+	/**
+	 * It is used to write on the screen and go to the next line.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @param args
+	 *            it is what you want to write as a Object.
+	 * @category Write
+	 * @see #write(Object)
+	 */
+	public static void writeln(Object args) {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
+		else System.out.println(args);
+	}
+
+	/**
+	 * It is used to write on the screen.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @param args
+	 *            it is what you want to write as a byte.
+	 * @category Write
+	 * @see #writeln(Object)
+	 */
+	public static void write(Object args) {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
+		else System.out.print(args);
+	}
+
+	/**
+	 * It is used to change the background color.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @param color
+	 *            the desired color for the background as Integer or Color.
+	 * @category BackGroundColor
+	 * @see #TextBackground(int)
+	 * @see #TextColor(Object)
+	 */
+	public static void TextBackground(Object color) {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.Console)) logger.severe("The requested action(TextBackground(Object)) is not possible on default console.");
+		else if (Display.isDisplayType(DisplayType.Window)) logger.severe("The requested action(TextBackground(Object)) is not possible on windows.");
 		else {
 			try {
-				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
-			} catch (ImpossibleActionException e) {
-				e.printStackTrace();
+				if (color instanceof Color) DynamicConsole.TextBackground((Color) color);
+				else DynamicConsole.TextBackground(new Color((int) color));
+			} catch (Exception e) {
+				logger.severe("The requested color: " + color + " doesnt exist or is in the wrong format. It as to be an int or Color format.");
 			}
-			return 0;
 		}
-	}
-
-	public static void read(String varToAssignTo) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		String out = null;
-		if (scanIn.hasNextLine()) {
-			varToAssignTo = scanIn.nextLine();
-			System.out.println("A: " + varToAssignTo);
-		}
-	}
-
-	/**
-	 * It is used to write on the screen and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a byte.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void writeln(byte args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
-		else System.out.println(args);
-	}
-
-	/**
-	 * It is used to write on the screen.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a byte.
-	 * @category Write
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void write(byte args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
-		else System.out.print(args);
-	}
-
-	/**
-	 * It is used to write on the screen and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a char.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void writeln(char args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
-		else System.out.println(args);
-	}
-
-	/**
-	 * It is used to write on the screen.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a char.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void write(char args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
-		else System.out.print(args);
-	}
-
-	/**
-	 * It is used to write on the screen and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a integer.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(String)
-	 */
-	public static void writeln(int args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
-		else System.out.println(args);
-	}
-
-	/**
-	 * It is used to write on the screen.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a integer.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void write(int args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
-		else System.out.print(args);
-	}
-
-	/**
-	 * It is used to write on the screen and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a String.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #write(String)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 */
-	public static void writeln(String args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.writeln(args);
-		else System.out.println(args);
-	}
-
-	/**
-	 * It is used to write on the screen.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param args
-	 *            it is what you want to write as a String.
-	 * @category Write
-	 * @see #write(byte)
-	 * @see #write(char)
-	 * @see #write(int)
-	 * @see #writeln(byte)
-	 * @see #writeln(char)
-	 * @see #writeln(int)
-	 * @see #writeln(String)
-	 */
-	public static void write(String args) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) DynamicConsole.write(args);
-		else System.out.print(args);
-	}
-
-	/**
-	 * It is used to change the background color.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param color
-	 *            the desired color for the background as integer.
-	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
-	 * @category BackGroundColor
-	 * @see #TextBackground(Color)
-	 * @see #TextColor(Color)
-	 * @see #TextColor(int)
-	 * 
-	 */
-	public static void TextBackground(int color) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextBackground");
-		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextBackground");
-		else DynamicConsole.TextBackground(color);
-	}
-
-	/**
-	 * It is used to change the background color.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param color
-	 *            the desired color for the background as Color.
-	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
-	 * @category BackGroundColor
-	 * @see #TextBackground(int)
-	 * @see #TextColor(Color)
-	 * @see #TextColor(int)
-	 */
-	public static void TextBackground(Color color) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextBackground");
-		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextBackground");
-		else DynamicConsole.TextBackground(color);
 	}
 
 	/**
@@ -499,38 +314,23 @@ public class TurnItEasier {
 	 * 
 	 * @author João Lourenço
 	 * @param color
-	 *            the desired color for the background as integer.
-	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
+	 *            the desired color for the background as intege or Colorr.
 	 * @category TextColor
 	 * @see #TextBackground(Color)
 	 * @see #TextBackground(int)
-	 * @see #TextColor(Color)
 	 */
-	public static void TextColor(int color) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextColor");
-		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextColor");
-		else DynamicConsole.TextColor(color);
-	}
-
-	/**
-	 * It is used to change the text color.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @param color
-	 *            the desired color for the background as integer.
-	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
-	 * @category TextColor
-	 * @see #TextBackground(Color)
-	 * @see #TextBackground(int)
-	 * @see #TextColor(int)
-	 */
-	public static void TextColor(Color color) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("TextColor");
-		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("TextColor");
-		else DynamicConsole.TextColor(color);
+	public static void TextColor(Object color) {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.Console)) logger.severe("The requested action(TextColor(Object)) is not possible on default console.");
+		else if (Display.isDisplayType(DisplayType.Window)) logger.severe("The requested action(TextColor(Object)) is not possible on windows.");
+		else {
+			try {
+				if (color instanceof Color) DynamicConsole.TextColor((Color) color);
+				else DynamicConsole.TextColor(new Color((int) color));
+			} catch (Exception e) {
+				logger.severe("The requested color: " + color + " doesnt exist or is in the wrong format. It as to be an int or Color format.");
+			}
+		}
 	}
 
 	/**
@@ -542,7 +342,6 @@ public class TurnItEasier {
 	 *            the x value of where to go.
 	 * @param y
 	 *            y the y value of where to go.
-	 * @throw ImpossibleActionException Thrown when the DisplayType is console or window.
 	 * @category WindowNavigation
 	 * @see #clrscr()
 	 * @see #delay(int)
@@ -550,9 +349,9 @@ public class TurnItEasier {
 	 * @see #exit(boolean)
 	 */
 	public static void GotoXY(int x, int y) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.Console)) ThrowImpossibleC("GotoXY");
-		else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("GotoXY");
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.Console)) logger.severe("The requested action(GotoXY(int, int)) is not possible on default console.");
+		else if (Display.isDisplayType(DisplayType.Window)) logger.severe("The requested action(GotoXY(int, int)) is not possible on windows.");
 		else DynamicConsole.GotoXY();
 	}
 
@@ -561,7 +360,6 @@ public class TurnItEasier {
 	 * <p>
 	 * 
 	 * @author João Lourenço
-	 * @throw ImpossibleActionException Thrown when the DisplayType is window.
 	 * @category ConsoleText
 	 * @see #delay(int)
 	 * @see #GotoXY(int, int)
@@ -569,11 +367,11 @@ public class TurnItEasier {
 	 * @see #exit(boolean)
 	 */
 	public static void clrscr() {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
+		createConsoleStreams();
 		if (Display.isDisplayType(DisplayType.Console)) {
 			for (int i = 0; i < 200; i++)
 				System.out.println("");
-		} else if (Display.isDisplayType(DisplayType.Window)) ThrowImpossibleW("clrscr");
+		} else if (Display.isDisplayType(DisplayType.Window)) logger.severe("The requested action(clrscr) is not possible on windows.");
 		else DynamicConsole.slrscr();
 	}
 
@@ -592,7 +390,6 @@ public class TurnItEasier {
 	 * @see #exit(boolean)
 	 */
 	public static void delay(int time) {
-		if (!Display.isDisplayCreated()) createConsoleStreams();
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
@@ -635,40 +432,6 @@ public class TurnItEasier {
 	 */
 	public static void exit() {
 		if (scanIn != null) scanIn.close();
-	}
-
-	/**
-	 * It is used to throw ImpossibleActionExceptions.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @throw ImpossibleActionException Thrown always.
-	 * @category AplicationControl
-	 * @see #ThrowImpossibleW(String)
-	 */
-	private static void ThrowImpossibleC(String message) {
-		try {
-			throw new ImpossibleActionException(message);
-		} catch (ImpossibleActionException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * It is used to throw ImpossibleActionExceptions.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @throw ImpossibleActionException Thrown always.
-	 * @category AplicationControl
-	 * @see #ThrowImpossibleC(String)
-	 */
-	private static void ThrowImpossibleW(String message) {
-		try {
-			throw new net.joaolourenco.easy.exceptions.window.ImpossibleActionException(message);
-		} catch (ImpossibleActionException e) {
-			e.printStackTrace();
-		}
 	}
 
 }
