@@ -7,15 +7,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
-
-import net.joaolourenco.easy.exceptions.window.FailedBuildPointerException;
 
 public class Window extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	static Thread thread;
+	static Logger logger = Logger.getLogger("TurnItEasier");
 	static boolean running;
 	static int tick;
 	static int fps;
@@ -115,11 +115,7 @@ public class Window extends Canvas implements Runnable {
 			} else method[id].invoke(null);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
-			try {
-				throw new FailedBuildPointerException();
-			} catch (FailedBuildPointerException ee) {
-				ee.printStackTrace();
-			}
+			logger.severe("The requested pointer is not possible to be stablished.");
 			if (id == 0) useUpdates = false;
 			else if (id == 1) useRenders = false;
 			else if (id == 2) useTicks = false;
@@ -214,11 +210,7 @@ public class Window extends Canvas implements Runnable {
 						done = false;
 					} else {
 						e.printStackTrace();
-						try {
-							throw new FailedBuildPointerException();
-						} catch (FailedBuildPointerException ee) {
-							ee.printStackTrace();
-						}
+						logger.severe("The requested pointer is not possible to be stablished.");
 						returnGraphics = false;
 					}
 				}

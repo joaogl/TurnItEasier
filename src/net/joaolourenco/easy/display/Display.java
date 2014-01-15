@@ -11,17 +11,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowListener;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import net.joaolourenco.easy.TurnItEasier.DisplayType;
-import net.joaolourenco.easy.exceptions.InvalidDisplayTypeException;
-import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
-import net.joaolourenco.easy.exceptions.window.NullPointException;
 
 /**
- * This is the second
+ * This is the second main class
  * <p>
  * 
  * @author João Lourenço
@@ -35,18 +33,13 @@ public class Display {
 	private static JFrame frame;
 	private static JPanel window;
 	private static Window windowRunnable;
+	static Logger logger = Logger.getLogger("TurnItEasier");
 
 	public static void create(DisplayType a) {
 		if (a == DisplayType.Console) {
 		} else if (a == DisplayType.DynamicConsole) DynamicConsole.create();
 		else if (a == DisplayType.Window) Window.create();
-		else {
-			try {
-				throw new InvalidDisplayTypeException(a.toString());
-			} catch (InvalidDisplayTypeException e) {
-				e.printStackTrace();
-			}
-		}
+		else logger.severe(a + " is not a valid DisplayType!");
 		if (a == DisplayType.Console || a == DisplayType.DynamicConsole || a == DisplayType.Window) setDisplayType(a);
 		else setDisplayType(DisplayType.DynamicConsole);
 	}
@@ -55,13 +48,7 @@ public class Display {
 		if (a == DisplayType.Console) {
 		} else if (a == DisplayType.DynamicConsole) DynamicConsole.create(usedefaults);
 		else if (a == DisplayType.Window) Window.create(usedefaults);
-		else {
-			try {
-				throw new InvalidDisplayTypeException(a.toString());
-			} catch (InvalidDisplayTypeException e) {
-				e.printStackTrace();
-			}
-		}
+		else logger.severe(a + " is not a valid DisplayType!");
 		if (a == DisplayType.Console || a == DisplayType.DynamicConsole || a == DisplayType.Window) setDisplayType(a);
 		else setDisplayType(DisplayType.DynamicConsole);
 	}
@@ -281,13 +268,7 @@ public class Display {
 			if (use) {
 				windowRunnable = new Window();
 				windowRunnable.start();
-			} else {
-				try {
-					throw new net.joaolourenco.easy.exceptions.window.NullPointException(1, "useRun");
-				} catch (ImpossibleActionException e) {
-					e.printStackTrace();
-				}
-			}
+			} else logger.severe("You cannot stop something that doesnt exist.(useRun)");
 		} else {
 			if (use) windowRunnable.start();
 			else windowRunnable.stop();
@@ -448,19 +429,11 @@ public class Display {
 	}
 
 	private static void ThrowNull(String message) {
-		try {
-			throw new NullPointException(message);
-		} catch (NullPointException e) {
-			e.printStackTrace();
-		}
+		logger.severe("The requested action(" + message + ") is not possible on frames.");
 	}
 
 	private static void ThrowImpossible(String message) {
-		try {
-			throw new ImpossibleActionException(message);
-		} catch (ImpossibleActionException e) {
-			e.printStackTrace();
-		}
+		logger.severe("The requested action(" + message + ") is not possible on default console.");
 	}
 
 }
