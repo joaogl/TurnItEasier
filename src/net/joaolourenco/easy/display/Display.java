@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.display;
+package net.joaolourenco.easy.display;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -15,11 +15,18 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import joaolourenco.net.easy.TurnItEasier.DisplayType;
-import joaolourenco.net.easy.exceptions.InvalidDisplayTypeException;
-import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
-import joaolourenco.net.easy.exceptions.console.NullPointException;
+import net.joaolourenco.easy.TurnItEasier.DisplayType;
+import net.joaolourenco.easy.exceptions.InvalidDisplayTypeException;
+import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
+import net.joaolourenco.easy.exceptions.console.NullPointException;
 
+/**
+ * This is the second
+ * <p>
+ * 
+ * @author João Lourenço
+ * @category DisplayType
+ */
 public class Display {
 
 	private static DisplayType currentDisplayType;
@@ -276,7 +283,7 @@ public class Display {
 				windowRunnable.start();
 			} else {
 				try {
-					throw new joaolourenco.net.easy.exceptions.window.NullPointException(1, "useRun");
+					throw new net.joaolourenco.easy.exceptions.window.NullPointException(1, "useRun");
 				} catch (ImpossibleActionException e) {
 					e.printStackTrace();
 				}

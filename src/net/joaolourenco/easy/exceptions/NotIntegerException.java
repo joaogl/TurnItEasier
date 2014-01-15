@@ -1,6 +1,6 @@
-package joaolourenco.net.easy.exceptions;
+package net.joaolourenco.easy.exceptions;
 
-public class NotIntegerException extends Exception {
+public class NotIntegerException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public NotIntegerException() {

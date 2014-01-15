@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.exceptions.console;
+package net.joaolourenco.easy.exceptions.console;
 
 public class NullPointException extends NullPointerException {
 	private static final long serialVersionUID = 1L;

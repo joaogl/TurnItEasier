@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.display;
+package net.joaolourenco.easy.display;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

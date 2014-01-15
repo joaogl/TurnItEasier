@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.exceptions;
+package net.joaolourenco.easy.exceptions;
 
 public class InvalidDisplayTypeException extends Exception {
 	private static final long serialVersionUID = 1L;

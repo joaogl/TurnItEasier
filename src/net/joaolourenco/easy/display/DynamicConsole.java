@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.display;
+package net.joaolourenco.easy.display;
 
 import java.awt.Color;
 
@@ -70,12 +70,12 @@ public class DynamicConsole {
 
 	public static void writeln(int args) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void write(int args) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.exceptions.window;
+package net.joaolourenco.easy.exceptions.window;
 
 public class FailedBuildPointerException extends UnsupportedOperationException {
 	private static final long serialVersionUID = 1L;

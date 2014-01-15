@@ -1,18 +1,34 @@
-package joaolourenco.net.easy;
+package net.joaolourenco.easy;
 
 import java.awt.Color;
 import java.io.Console;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
-import joaolourenco.net.easy.display.Display;
-import joaolourenco.net.easy.display.DynamicConsole;
-import joaolourenco.net.easy.exceptions.NotIntegerException;
-import joaolourenco.net.easy.exceptions.console.ImpossibleActionException;
-import joaolourenco.net.easy.exceptions.console.NullPointException;
+import net.joaolourenco.easy.display.Display;
+import net.joaolourenco.easy.display.DynamicConsole;
+import net.joaolourenco.easy.exceptions.NotIntegerException;
+import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
+import net.joaolourenco.easy.exceptions.console.NullPointException;
 
+/**
+ * This is the main class of the API. It is used for all the console functions.
+ * <p>
+ * 
+ * @author João Lourenço
+ * @category Class
+ */
 public class TurnItEasier {
 
+	/**
+	 * It is the scanner that the API uses to read the input from the user.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @category Variables
+	 */
 	static Scanner scanIn;
+	static Logger logger = Logger.getLogger("TurnItEasier");
 
 	/**
 	 * It contains all the possible DisplayTypes from the TIE API.
@@ -134,7 +150,7 @@ public class TurnItEasier {
 		else {
 			try {
 				throw new NullPointException("No Java console found.(It as to be exported in order to run properly)", "");
-			} catch (ImpossibleActionException e) {
+			} catch (NullPointException e) {
 				e.printStackTrace();
 			}
 			return null;
@@ -168,11 +184,7 @@ public class TurnItEasier {
 				try {
 					return Integer.parseInt(out);
 				} catch (Exception e) {
-					try {
-						throw new NotIntegerException();
-					} catch (NotIntegerException ee) {
-						ee.printStackTrace();
-					}
+					logger.severe("The input is not an Integer!");
 					return 0;
 				}
 			} else return 0;
@@ -247,6 +259,22 @@ public class TurnItEasier {
 			return 0;
 		}
 	}
+
+	
+	
+	
+	public static void read(String varToAssignTo) {
+		if (!Display.isDisplayCreated()) createConsoleStreams();
+		String out = null;
+		if (scanIn.hasNextLine()) {
+			varToAssignTo = scanIn.nextLine();
+			System.out.println("A: " + varToAssignTo);
+		}
+	}
+	
+	
+	
+	
 
 	/**
 	 * It is used to write on the screen and go to the next line.
@@ -637,7 +665,7 @@ public class TurnItEasier {
 	 */
 	private static void ThrowImpossibleW(String message) {
 		try {
-			throw new joaolourenco.net.easy.exceptions.window.ImpossibleActionException(message);
+			throw new net.joaolourenco.easy.exceptions.window.ImpossibleActionException(message);
 		} catch (ImpossibleActionException e) {
 			e.printStackTrace();
 		}

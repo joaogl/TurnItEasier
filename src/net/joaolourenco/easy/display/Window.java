@@ -1,4 +1,4 @@
-package joaolourenco.net.easy.display;
+package net.joaolourenco.easy.display;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
 
-import joaolourenco.net.easy.exceptions.window.FailedBuildPointerException;
+import net.joaolourenco.easy.exceptions.window.FailedBuildPointerException;
 
 public class Window extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -124,6 +124,7 @@ public class Window extends Canvas implements Runnable {
 			else if (id == 1) useRenders = false;
 			else if (id == 2) useTicks = false;
 		}
+
 	}
 
 	public void useUpdate(boolean use, String classn, String methodn) {
@@ -205,6 +206,7 @@ public class Window extends Canvas implements Runnable {
 						m.invoke(null, (Object) g);
 						method[3] = m;
 					} else method[3].invoke(null, (Object) g);
+
 				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					if (id == 0) {
 						id = 1;
@@ -220,8 +222,8 @@ public class Window extends Canvas implements Runnable {
 						returnGraphics = false;
 					}
 				}
-			}
 
+			}
 			g.dispose();
 			bs.show();
 		} else if (useRenders) invokeClass(1);
