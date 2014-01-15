@@ -109,52 +109,6 @@ public class TurnItEasier {
 	}
 
 	/**
-	 * It is used to get text from the user and go to the next line.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @return the user input text as a String.
-	 * @category Read
-	 * @see #read()
-	 * @see #read(int)
-	 * @see #readKey()
-	 * @see #readln(int)
-	 * @see #readPW()
-	 * @see #readPW(int)
-	 */
-	public static String readln() {
-		createConsoleStreams();
-		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
-		else {
-			String out = null;
-			if (scanIn.hasNextLine()) out = scanIn.nextLine();
-			return out;
-		}
-	}
-
-	/**
-	 * It is used to get a password from the user.
-	 * <p>
-	 * 
-	 * @author João Lourenço
-	 * @return the user input password as a String.
-	 * @category Read
-	 * @see #read()
-	 * @see #read(int)
-	 * @see #readKey()
-	 * @see #readln()
-	 * @see #readln(int)
-	 * @see #readPW(int)
-	 */
-	public static String readPW() {
-		createConsoleStreams();
-		Console c = System.console();
-		if (c != null) return String.valueOf(System.console().readPassword());
-		else logger.severe("No Java console found.(It as to be exported in order to run properly)");
-		return null;
-	}
-
-	/**
 	 * It is used to get numbers from the user.
 	 * <p>
 	 * 
@@ -190,6 +144,30 @@ public class TurnItEasier {
 	}
 
 	/**
+	 * It is used to get text from the user and go to the next line.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @return the user input text as a String.
+	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln(int)
+	 * @see #readPW()
+	 * @see #readPW(int)
+	 */
+	public static String readln() {
+		createConsoleStreams();
+		if (Display.isDisplayType(DisplayType.DynamicConsole)) return DynamicConsole.read();
+		else {
+			String out = null;
+			if (scanIn.hasNextLine()) out = scanIn.nextLine();
+			return out;
+		}
+	}
+
+	/**
 	 * It is used to get numbers from the user and go to the next line.
 	 * <p>
 	 * 
@@ -220,6 +198,28 @@ public class TurnItEasier {
 				}
 			} else return 0;
 		}
+	}
+
+	/**
+	 * It is used to get a password from the user.
+	 * <p>
+	 * 
+	 * @author João Lourenço
+	 * @return the user input password as a String.
+	 * @category Read
+	 * @see #read()
+	 * @see #read(int)
+	 * @see #readKey()
+	 * @see #readln()
+	 * @see #readln(int)
+	 * @see #readPW(int)
+	 */
+	public static String readPW() {
+		createConsoleStreams();
+		Console c = System.console();
+		if (c != null) return String.valueOf(System.console().readPassword());
+		else logger.severe("No Java console found.(It as to be exported in order to run properly)");
+		return null;
 	}
 
 	/**
