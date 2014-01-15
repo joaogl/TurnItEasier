@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import net.joaolourenco.easy.TurnItEasier.DisplayType;
 import net.joaolourenco.easy.exceptions.InvalidDisplayTypeException;
 import net.joaolourenco.easy.exceptions.console.ImpossibleActionException;
-import net.joaolourenco.easy.exceptions.console.NullPointException;
+import net.joaolourenco.easy.exceptions.window.NullPointException;
 
 /**
  * This is the second
